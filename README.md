@@ -20,7 +20,8 @@ left 	左上角坐标X
 width 	字符宽度
 label 	字符编码
 
-注：数据集来源自SVHN，网页链接http://ufldl.stanford.edu/housenumbers/，并进行匿名处理和噪音处理，请各位选手使用比赛给定的数据集完成训练。
+注：数据集来源自SVHN，网页链接http://ufldl.stanford.edu/housenumbers/
+并进行匿名处理和噪音处理，请各位选手使用比赛给定的数据集完成训练。
 
 二、评测标准
 
