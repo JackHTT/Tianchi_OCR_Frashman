@@ -1,10 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-'''
-@File   :  fixed_length_baseline -> ModelClass.py
-@Date   :  2021/1/19 11:17
-@Author :  HJT
-'''
 
 import torch
 from torch import nn
@@ -113,7 +108,7 @@ class SVHN_EasyCNN_model(nn.Module):
         feat = self.cnn(img)
         # reshape到一维
         feat = feat.view(feat.shape[0], -1)
-        # 并联6个全连接层
+        # 并联4个全连接层
         c1 = self.fc1(feat)
         c2 = self.fc2(feat)
         c3 = self.fc3(feat)
@@ -139,7 +134,7 @@ class SVHN_Resnet_model(nn.Module):
         feat = self.cnn(img)
         # reshape到一维
         feat = feat.view(feat.shape[0], -1)
-        # 并联6个全连接层
+        # 并联4个全连接层
         c1 = self.fc1(feat)
         c2 = self.fc2(feat)
         c3 = self.fc3(feat)
@@ -151,20 +146,6 @@ class SVHN_Resnet_model(nn.Module):
 class Length_Recognition_model(nn.Module):
     def __init__(self):
         super(Length_Recognition_model,self).__init__()  # 调用父类nn.Module的init()构造函数
-        # 定义网络结构参数
-        # self.cnn = nn.Sequential(
-        #     nn.Conv2d(3,16,kernel_size=(3,3),stride=(2,2)),
-        #     # nn.BatchNorm2d(16),  # 参数为通道数
-        #     nn.ReLU(),
-        #     nn.Dropout(0.25),
-        #     nn.MaxPool2d(2), # kernel_size = 2
-        #
-        #     nn.Conv2d(16,32,kernel_size=(3,3),stride=(2,2)),
-        #     # nn.BatchNorm2d(32),  # 参数为通道数
-        #     nn.ReLU(),
-        #     nn.Dropout(0.25),
-        #     nn.MaxPool2d(2),
-        # )
 
         model_conv = models.resnet18(pretrained=True)  # 迁移学习
         model_conv.avgpool = nn.AdaptiveAvgPool2d(1)  # 修改resnet中的平均池化层参数
@@ -177,7 +158,6 @@ class Length_Recognition_model(nn.Module):
         feat = self.cnn(img)
         # reshape到一维
         feat = feat.view(feat.shape[0], -1)
-        # 并联6个全连接层
         c = self.fc(feat)
 
         return c
