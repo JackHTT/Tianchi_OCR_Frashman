@@ -1,10 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-'''
-@File   :  fixed_length_baseline -> length_recognition.py
-@Date   :  2021/1/20 13:50
-@Author :  HJT
-'''
+
 import glob, json
 import torch
 from ModelClass import *
