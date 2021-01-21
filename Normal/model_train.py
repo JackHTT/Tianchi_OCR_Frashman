@@ -1,20 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-'''
-@File   :  定长字符识别baseline -> img_read.py
-@Date   :  2021/1/16 20:01
-@Author :  HJT
-'''
-
-# python中常用的图片数据读取库为Pillow和OpenCV
-'''
-from PIL import Image, ImageFilter
-
-img_path = 'F:/天池街景字符编码识别(新手赛)/Dataset/000000.png'
-img = Image.open(img_path)
-im2 = img.filter(ImageFilter.BLUR)  # 模糊滤波
-img.thumbnail((w//2, h//2))  # 图片宽高缩小一半
-'''
 
 # 数据扩增：颜色空间、尺度空间、样本空间
 # 常用数据扩增库:torchvision、imgaug、albumentations
@@ -110,9 +95,9 @@ def preprocess(json):
     return png_idx
 
 ######################  训练集构造  #######################
-train_path = glob.glob('F:/Tianchi_OCR_Freshman/Dataset/mchar_train/*.png')
+train_path = glob.glob('./data/mchar_train/*.png')
 train_path.sort()  # 按照文件名排序
-train_json = json.load(open('F:/Tianchi_OCR_Freshman/Dataset/mchar_train.json'))  # 是排好序了的
+train_json = json.load(open('./data/mchar_train.json'))  # 是排好序了的
 train_json = sorted(train_json.items())
 train_json = OrderedDict(train_json)
 train_label = [train_json[x]['label'] for x in train_json]  # 有顺序的label
@@ -140,9 +125,9 @@ train_loader = torch.utils.data.DataLoader(
 )
 
 ######################  验证集构造  #######################
-valid_path = glob.glob('F:/Tianchi_OCR_Freshman/Dataset/mchar_val/*.png')
+valid_path = glob.glob('./data/mchar_val/*.png')
 valid_path.sort()
-valid_json = json.load(open('F:/Tianchi_OCR_Freshman/Dataset/mchar_val.json'))  # 是排好序了的
+valid_json = json.load(open('./data/mchar_val.json'))  # 是排好序了的
 valid_json = sorted(valid_json.items())
 valid_json = OrderedDict(valid_json)
 valid_label = [valid_json[x]['label'] for x in valid_json]  # 有顺序的label
@@ -168,12 +153,9 @@ valid_loader = torch.utils.data.DataLoader(
 
 '''  不定长字符识别部分  '''
 ###############   模型定义   ################
-# model1 = SVHN_EasyCNN_model()
 model1 = SVHN_Resnet_model()
 
 criterion = nn.CrossEntropyLoss()  # softmax-log-NLLLoss
-# pos_weight = torch.tensor([2,2,2,2,2,2,2,2,2,2,1],dtype=torch.float)
-# criterion = nn.BCEWithLogitsLoss()  # 降低类别10的权重
 
 lr = 0.002
 optimizer = torch.optim.Adam(model1.parameters(), lr)  # 学习率可能大了
